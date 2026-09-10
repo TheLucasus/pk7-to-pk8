@@ -41,9 +41,10 @@ foreach (var inputPath in inputFiles)
     try
     {
         var source = new PK7(File.ReadAllBytes(inputPath));
-        var converted = EntityConverter.ConvertToType(source, typeof(PK8), out var result);
+        var target = new PK8();
+        var isCompatible = EntityConverter.TryMakePKMCompatible(source, target, out var result, out var converted);
 
-        if (converted is not PK8 pk8 || !result.IsSuccess)
+        if (!isCompatible || converted is not PK8 pk8 || !result.IsSuccess)
         {
             failures++;
             Console.Error.WriteLine($"FAILED {fileName}: {result}");

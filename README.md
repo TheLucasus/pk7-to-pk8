@@ -44,7 +44,10 @@ code `1` if at least one file fails.
 
 ## Destination save context
 
-The current PKHeX.Core conversion route converts PK7 to PK8 without requiring
-a Sword/Shield save. A destination save is needed later if the Pokemon is
-inserted into a save and needs that save's trainer or handler context; it is
-not needed for producing the standalone PK8 file.
+The converter uses the same `EntityConverter.TryMakePKMCompatible` path that
+PKHeX uses when a PK7 is loaded into a PK8/Sword & Shield editor. It creates a
+format-correct PK8 without inventing a HOME tracker. The tracker remains zero
+unless the source already contains a tracker; Pokémon HOME assigns it during
+an actual HOME transfer. A destination Sword/Shield save is not required for
+this local conversion, though it is required later for save-specific handler
+adaptation.
